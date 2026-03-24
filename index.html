@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🏆 Top 10 Soccer Teams 2025</title>
+  <style>
+    body { font-family: 'Segoe UI', sans-serif; background: linear-gradient(135deg, #1a1a2e, #16213e); min-height: 100vh; padding: 20px; }
+    .container { max-width: 900px; margin: 0 auto; }
+    h1 { text-align: center; color: #fff; margin-bottom: 10px; font-size: 2.5em; }
+    .subtitle { text-align: center; color: #a0a0a0; margin-bottom: 30px; }
+    .filter { display: flex; gap: 10px; margin-bottom: 20px; justify-content: center; flex-wrap: wrap; }
+    .filter button { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: #fff; padding: 8px 20px; border-radius: 20px; cursor: pointer; }
+    .filter button:hover { background: rgba(255,255,255,0.2); }
+    .filter button.active { background: #00d4ff; border-color: #00d4ff; color: #1a1a2e; font-weight: bold; }
+    .team-list { display: grid; gap: 15px; }
+    .team-card { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 15px; padding: 20px; display: flex; align-items: center; gap: 20px; transition: all 0.3s ease; }
+    .team-card:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(0, 212, 255, 0.2); }
+    .team-card.pos-1 { border-left: 5px solid #ffd700; }
+    .team-card.pos-2 { border-left: 5px solid #c0c0c0; }
+    .team-card.pos-3 { border-left: 5px solid #cd7f32; }
+    .team-rank { font-size: 2em; font-weight: bold; color: #00d4ff; min-width: 50px; }
+    .team-logo { font-size: 3em; width: 60px; text-align: center; }
+    .team-info { flex: 1; }
+    .team-name { font-size: 1.4em; color: #fff; margin-bottom: 5px; }
+    .team-country { color: #a0a0a0; font-size: 0.9em; }
+    .team-stats { display: flex; gap: 20px; text-align: center; }
+    .stat { background: rgba(0, 212, 255, 0.1); padding: 10px 15px; border-radius: 10px; }
+    .stat-label { color: #a0a0a0; font-size: 0.8em; display: block; }
+    .stat-value { color: #00d4ff; font-size: 1.2em; font-weight: bold; }
+    @media (max-width: 600px) { h1 { font-size: 1.8em; } .team-card { flex-direction: column; text-align: center; } .team-stats { justify-content: center; margin-top: 15px; } }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🏆 Top 10 Soccer Teams 2025</h1>
+    <p class="subtitle">Premier League • La Liga • Bundesliga • Serie A • Ligue 1</p>
+    
+    <div class="filter">
+      <button class="active" onclick="filterTeams('all')">All</button>
+      <button onclick="filterTeams('Spain')">Spain</button>
+      <button onclick="filterTeams('England')">England</button>
+      <button onclick="filterTeams('Germany')">Germany</button>
+      <button onclick="filterTeams('Italy')">Italy</button>
+      <button onclick="filterTeams('France')">France</button>
+    </div>
+    
+    <div class="team-list" id="teamList"></div>
+  </div>
+  
+  <script>
+    const teams = [
+      { name: "Real Madrid", country: "Spain", points: 94, matches: 37, logo: "🇪🇸" },
+      { name: "Manchester City", country: "England", points: 91, matches: 37, logo: "🏴󠁧󠁢󠁥󠁮󠁧󠁿" },
+      { name: "Bayern Munich", country: "Germany", points: 89, matches: 36, logo: "🇩🇪" },
+      { name: "Arsenal", country: "England", points: 86, matches: 37, logo: "🏴󠁧󠁢󠁥󠁮󠁧󠁿" },
+      { name: "Barcelona", country: "Spain", points: 84, matches: 37, logo: "🇪🇸" },
+      { name: "PSG", country: "France", points: 82, matches: 36, logo: "🇫🇷" },
+      { name: "Inter Milan", country: "Italy", points: 80, matches: 37, logo: "🇮🇹" },
+      { name: "Chelsea", country: "England", points: 78, matches: 37, logo: "🏴󠁧󠁢󠁥󠁮󠁧󠁿" },
+      { name: "Dortmund", country: "Germany", points: 76, matches: 36, logo: "🇩🇪" },
+      { name: "Napoli", country: "Italy", points: 74, matches: 37, logo: "🇮🇹" },
+    ];
+    let currentFilter = 'all';
+    
+    function renderTeams() {
+      const list = document.getElementById('teamList');
+      const filtered = currentFilter === 'all' ? teams : teams.filter(t => t.country === currentFilter);
+      list.innerHTML = filtered.map((team, index) => {
+        const actualIndex = teams.indexOf(team) + 1;
+        return \`
+          <div class="team-card pos-\${actualIndex}" data-country="\${team.country}">
+            <div class="team-rank">#\${actualIndex}</div>
+            <div class="team-logo">\${team.logo}</div>
+            <div class="team-info">
+              <div class="team-name">\${team.name}</div>
+              <div class="team-country">\${team.country}</div>
+            </div>
+            <div class="team-stats">
+              <div class="stat">
+                <span class="stat-label">Points</span>
+                <span class="stat-value">\${team.points}</span>
+              </div>
+              <div class="stat">
+                <span class="stat-label">Matches</span>
+                <span class="stat-value">\${team.matches}</span>
+              </div>
+            </div>
+          </div>
+        \`;
+      }).join('');
+    }
+    
+    function filterTeams(country) {
+      currentFilter = country;
+      document.querySelectorAll('.filter button').forEach(btn => { btn.classList.remove('active'); if (btn.textContent === country) btn.classList.add('active'); });
+      renderTeams();
+    }
+    
+    renderTeams();
+  </script>
+</body>
+</html>
