@@ -5,99 +5,499 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>🏆 Top 10 Soccer Teams 2025</title>
   <style>
-    body { font-family: 'Segoe UI', sans-serif; background: linear-gradient(135deg, #1a1a2e, #16213e); min-height: 100vh; padding: 20px; }
-    .container { max-width: 900px; margin: 0 auto; }
-    h1 { text-align: center; color: #fff; margin-bottom: 10px; font-size: 2.5em; }
-    .subtitle { text-align: center; color: #a0a0a0; margin-bottom: 30px; }
-    .filter { display: flex; gap: 10px; margin-bottom: 20px; justify-content: center; flex-wrap: wrap; }
-    .filter button { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: #fff; padding: 8px 20px; border-radius: 20px; cursor: pointer; }
-    .filter button:hover { background: rgba(255,255,255,0.2); }
-    .filter button.active { background: #00d4ff; border-color: #00d4ff; color: #1a1a2e; font-weight: bold; }
-    .team-list { display: grid; gap: 15px; }
-    .team-card { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 15px; padding: 20px; display: flex; align-items: center; gap: 20px; transition: all 0.3s ease; }
-    .team-card:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(0, 212, 255, 0.2); }
-    .team-card.pos-1 { border-left: 5px solid #ffd700; }
-    .team-card.pos-2 { border-left: 5px solid #c0c0c0; }
-    .team-card.pos-3 { border-left: 5px solid #cd7f32; }
-    .team-rank { font-size: 2em; font-weight: bold; color: #00d4ff; min-width: 50px; }
-    .team-logo { font-size: 3em; width: 60px; text-align: center; }
-    .team-info { flex: 1; }
-    .team-name { font-size: 1.4em; color: #fff; margin-bottom: 5px; }
-    .team-country { color: #a0a0a0; font-size: 0.9em; }
-    .team-stats { display: flex; gap: 20px; text-align: center; }
-    .stat { background: rgba(0, 212, 255, 0.1); padding: 10px 15px; border-radius: 10px; }
-    .stat-label { color: #a0a0a0; font-size: 0.8em; display: block; }
-    .stat-value { color: #00d4ff; font-size: 1.2em; font-weight: bold; }
-    @media (max-width: 600px) { h1 { font-size: 1.8em; } .team-card { flex-direction: column; text-align: center; } .team-stats { justify-content: center; margin-top: 15px; } }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    body { 
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+      background: linear-gradient(135deg, #0f0f1e 0%, #1a1a3f 50%, #0f0f1e 100%);
+      min-height: 100vh; 
+      padding: 20px;
+      color: #fff;
+    }
+    
+    .container { 
+      max-width: 1000px; 
+      margin: 0 auto; 
+    }
+    
+    header {
+      text-align: center;
+      margin-bottom: 40px;
+      animation: slideDown 0.6s ease-out;
+    }
+    
+    h1 { 
+      font-size: 3em; 
+      margin-bottom: 10px;
+      background: linear-gradient(45deg, #00d4ff, #0099ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 30px rgba(0, 212, 255, 0.3);
+    }
+    
+    .subtitle { 
+      color: #a0a0a0; 
+      font-size: 1.1em;
+      letter-spacing: 1px;
+    }
+    
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin-bottom: 30px;
+      justify-content: center;
+      align-items: center;
+    }
+    
+    .search-box {
+      flex: 1;
+      min-width: 200px;
+      max-width: 400px;
+      position: relative;
+    }
+    
+    .search-box input {
+      width: 100%;
+      padding: 12px 15px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(0,212,255,0.3);
+      border-radius: 25px;
+      color: #fff;
+      font-size: 1em;
+      transition: all 0.3s ease;
+    }
+    
+    .search-box input:focus {
+      outline: none;
+      background: rgba(255,255,255,0.12);
+      border-color: #00d4ff;
+      box-shadow: 0 0 20px rgba(0,212,255,0.2);
+    }
+    
+    .search-box input::placeholder {
+      color: #a0a0a0;
+    }
+    
+    .filter-group {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    
+    .filter-btn {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(0,212,255,0.3);
+      color: #a0a0a0;
+      padding: 10px 20px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 0.95em;
+      transition: all 0.3s ease;
+      font-weight: 500;
+    }
+    
+    .filter-btn:hover {
+      background: rgba(0,212,255,0.1);
+      border-color: #00d4ff;
+      color: #00d4ff;
+      transform: translateY(-2px);
+    }
+    
+    .filter-btn.active {
+      background: linear-gradient(45deg, #00d4ff, #0099ff);
+      border-color: #00d4ff;
+      color: #0f0f1e;
+      font-weight: bold;
+      box-shadow: 0 0 20px rgba(0,212,255,0.4);
+    }
+    
+    .sort-group {
+      display: flex;
+      gap: 8px;
+    }
+    
+    .sort-btn {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,165,0,0.3);
+      color: #ffa500;
+      padding: 10px 15px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 0.9em;
+      transition: all 0.3s ease;
+    }
+    
+    .sort-btn:hover {
+      background: rgba(255,165,0,0.1);
+      border-color: #ffa500;
+    }
+    
+    .sort-btn.active {
+      background: #ffa500;
+      color: #0f0f1e;
+      box-shadow: 0 0 20px rgba(255,165,0,0.3);
+    }
+    
+    .team-list { 
+      display: grid; 
+      gap: 15px;
+    }
+    
+    .team-card { 
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(0,212,255,0.1);
+      border-radius: 12px;
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .team-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(0,212,255,0.1), transparent);
+      transition: left 0.5s ease;
+    }
+    
+    .team-card:hover::before {
+      left: 100%;
+    }
+    
+    .team-card:hover { 
+      transform: translateY(-5px);
+      background: rgba(255,255,255,0.08);
+      border-color: rgba(0,212,255,0.4);
+      box-shadow: 0 15px 40px rgba(0, 212, 255, 0.15);
+    }
+    
+    .team-card.pos-1 { border-left: 4px solid #ffd700; }
+    .team-card.pos-2 { border-left: 4px solid #c0c0c0; }
+    .team-card.pos-3 { border-left: 4px solid #cd7f32; }
+    
+    .medal {
+      font-size: 1.8em;
+      margin-right: 10px;
+    }
+    
+    .team-rank { 
+      font-size: 1.8em;
+      font-weight: bold;
+      color: #00d4ff;
+      min-width: 40px;
+      text-align: center;
+    }
+    
+    .team-logo { 
+      font-size: 3em;
+      width: 70px;
+      text-align: center;
+      filter: drop-shadow(0 0 10px rgba(0,212,255,0.3));
+    }
+    
+    .team-info { 
+      flex: 1;
+      min-width: 150px;
+    }
+    
+    .team-name { 
+      font-size: 1.4em;
+      color: #fff;
+      margin-bottom: 5px;
+      font-weight: 600;
+    }
+    
+    .team-country { 
+      color: #a0a0a0;
+      font-size: 0.9em;
+    }
+    
+    .team-stats { 
+      display: flex;
+      gap: 15px;
+      text-align: center;
+    }
+    
+    .stat { 
+      background: linear-gradient(135deg, rgba(0,212,255,0.1), rgba(0,180,255,0.05));
+      padding: 12px 18px;
+      border-radius: 10px;
+      border: 1px solid rgba(0,212,255,0.2);
+      transition: all 0.3s ease;
+    }
+    
+    .team-card:hover .stat {
+      background: linear-gradient(135deg, rgba(0,212,255,0.2), rgba(0,180,255,0.1));
+      border-color: rgba(0,212,255,0.4);
+    }
+    
+    .stat-label { 
+      color: #a0a0a0;
+      font-size: 0.8em;
+      display: block;
+      margin-bottom: 5px;
+    }
+    
+    .stat-value { 
+      color: #00d4ff;
+      font-size: 1.3em;
+      font-weight: bold;
+    }
+    
+    .no-results {
+      text-align: center;
+      padding: 40px 20px;
+      color: #a0a0a0;
+      font-size: 1.1em;
+    }
+    
+    .stats-summary {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 15px;
+      margin-bottom: 30px;
+    }
+    
+    .summary-card {
+      background: rgba(0,212,255,0.1);
+      border: 1px solid rgba(0,212,255,0.2);
+      padding: 20px;
+      border-radius: 12px;
+      text-align: center;
+    }
+    
+    .summary-card h3 {
+      color: #a0a0a0;
+      font-size: 0.9em;
+      margin-bottom: 10px;
+    }
+    
+    .summary-card .value {
+      font-size: 2em;
+      color: #00d4ff;
+      font-weight: bold;
+    }
+    
+    footer {
+      text-align: center;
+      margin-top: 50px;
+      padding: 30px 20px;
+      border-top: 1px solid rgba(0,212,255,0.1);
+      color: #a0a0a0;
+    }
+    
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    @media (max-width: 768px) { 
+      h1 { font-size: 2em; }
+      .team-card { 
+        flex-direction: column;
+        text-align: center;
+      }
+      .team-stats { 
+        justify-content: center;
+        width: 100%;
+      }
+      .controls {
+        flex-direction: column;
+      }
+      .search-box {
+        max-width: 100%;
+      }
+      .filter-group {
+        justify-content: center;
+        width: 100%;
+      }
+    }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>🏆 Top 10 Soccer Teams 2025</h1>
-    <p class="subtitle">Premier League • La Liga • Bundesliga • Serie A • Ligue 1</p>
+    <header>
+      <h1>🏆 Top 10 Soccer Teams 2025</h1>
+      <p class="subtitle">Premier League • La Liga • Bundesliga • Serie A • Ligue 1</p>
+    </header>
     
-    <div class="filter">
-      <button class="active" onclick="filterTeams('all')">All</button>
-      <button onclick="filterTeams('Spain')">Spain</button>
-      <button onclick="filterTeams('England')">England</button>
-      <button onclick="filterTeams('Germany')">Germany</button>
-      <button onclick="filterTeams('Italy')">Italy</button>
-      <button onclick="filterTeams('France')">France</button>
+    <div class="controls">
+      <div class="search-box">
+        <input type="text" id="searchInput" placeholder="🔍 Search teams...">
+      </div>
+      <div class="filter-group">
+        <button class="filter-btn active" onclick="filterTeams('all')">All</button>
+        <button class="filter-btn" onclick="filterTeams('Spain')">Spain</button>
+        <button class="filter-btn" onclick="filterTeams('England')">England</button>
+        <button class="filter-btn" onclick="filterTeams('Germany')">Germany</button>
+        <button class="filter-btn" onclick="filterTeams('Italy')">Italy</button>
+        <button class="filter-btn" onclick="filterTeams('France')">France</button>
+      </div>
+      <div class="sort-group">
+        <button class="sort-btn active" onclick="sortTeams('rank')">Rank</button>
+        <button class="sort-btn" onclick="sortTeams('points')">Points</button>
+        <button class="sort-btn" onclick="sortTeams('name')">Name</button>
+      </div>
     </div>
     
+    <div class="stats-summary" id="statsSummary"></div>
+    
     <div class="team-list" id="teamList"></div>
+    <div id="noResults" class="no-results" style="display:none;">No teams found</div>
   </div>
+  
+  <footer>
+    <p>© 2025 Soccer Rankings. Real-time data from top European leagues.</p>
+  </footer>
   
   <script>
     const teams = [
-      { name: "Real Madrid", country: "Spain", points: 94, matches: 37, logo: "🇪🇸" },
-      { name: "Manchester City", country: "England", points: 91, matches: 37, logo: "🏴󠁧󠁢󠁥󠁮󠁧󠁿" },
-      { name: "Bayern Munich", country: "Germany", points: 89, matches: 36, logo: "🇩🇪" },
-      { name: "Arsenal", country: "England", points: 86, matches: 37, logo: "🏴󠁧󠁢󠁥󠁮󠁧󠁿" },
-      { name: "Barcelona", country: "Spain", points: 84, matches: 37, logo: "🇪🇸" },
-      { name: "PSG", country: "France", points: 82, matches: 36, logo: "🇫🇷" },
-      { name: "Inter Milan", country: "Italy", points: 80, matches: 37, logo: "🇮🇹" },
-      { name: "Chelsea", country: "England", points: 78, matches: 37, logo: "🏴󠁧󠁢󠁥󠁮󠁧󠁿" },
-      { name: "Dortmund", country: "Germany", points: 76, matches: 36, logo: "🇩🇪" },
-      { name: "Napoli", country: "Italy", points: 74, matches: 37, logo: "🇮🇹" },
+      { name: "Real Madrid", country: "Spain", points: 94, matches: 37, logo: "👑" },
+      { name: "Manchester City", country: "England", points: 91, matches: 37, logo: "🔵" },
+      { name: "Bayern Munich", country: "Germany", points: 89, matches: 36, logo: "🔴" },
+      { name: "Arsenal", country: "England", points: 86, matches: 37, logo: "⚪" },
+      { name: "Barcelona", country: "Spain", points: 84, matches: 37, logo: "🟦" },
+      { name: "PSG", country: "France", points: 82, matches: 36, logo: "⚽" },
+      { name: "Inter Milan", country: "Italy", points: 80, matches: 37, logo: "🔵⚫" },
+      { name: "Chelsea", country: "England", points: 78, matches: 37, logo: "🔵" },
+      { name: "Dortmund", country: "Germany", points: 76, matches: 36, logo: "💛" },
+      { name: "Napoli", country: "Italy", points: 74, matches: 37, logo: "🔵" },
     ];
+    
     let currentFilter = 'all';
+    let currentSort = 'rank';
+    let searchTerm = '';
+    
+    const medals = ['🥇', '🥈', '🥉'];
+    
+    document.getElementById('searchInput').addEventListener('input', (e) => {
+      searchTerm = e.target.value.toLowerCase();
+      renderTeams();
+    });
+    
+    function getSortedTeams() {
+      let sorted = [...teams];
+      
+      if (currentSort === 'points') {
+        sorted.sort((a, b) => b.points - a.points);
+      } else if (currentSort === 'name') {
+        sorted.sort((a, b) => a.name.localeCompare(b.name));
+      }
+      
+      return sorted;
+    }
     
     function renderTeams() {
+      const sorted = getSortedTeams();
+      const filtered = currentFilter === 'all' 
+        ? sorted 
+        : sorted.filter(t => t.country === currentFilter);
+      
+      const searched = filtered.filter(t => t.name.toLowerCase().includes(searchTerm));
+      
       const list = document.getElementById('teamList');
-      const filtered = currentFilter === 'all' ? teams : teams.filter(t => t.country === currentFilter);
-      list.innerHTML = filtered.map((team, index) => {
+      const noResults = document.getElementById('noResults');
+      
+      if (searched.length === 0) {
+        noResults.style.display = 'block';
+        list.innerHTML = '';
+        return;
+      }
+      
+      noResults.style.display = 'none';
+      list.innerHTML = searched.map((team) => {
         const actualIndex = teams.indexOf(team) + 1;
-        return \`
-          <div class="team-card pos-\${actualIndex}" data-country="\${team.country}">
-            <div class="team-rank">#\${actualIndex}</div>
-            <div class="team-logo">\${team.logo}</div>
+        const medal = actualIndex <= 3 ? medals[actualIndex - 1] : '';
+        return `
+          <div class="team-card pos-${actualIndex}" data-country="${team.country}">
+            <div style="display: flex; align-items: center;">
+              ${medal && `<div class="medal">${medal}</div>`}
+              <div class="team-rank">#${actualIndex}</div>
+            </div>
+            <div class="team-logo">${team.logo}</div>
             <div class="team-info">
-              <div class="team-name">\${team.name}</div>
-              <div class="team-country">\${team.country}</div>
+              <div class="team-name">${team.name}</div>
+              <div class="team-country">${team.country}</div>
             </div>
             <div class="team-stats">
               <div class="stat">
                 <span class="stat-label">Points</span>
-                <span class="stat-value">\${team.points}</span>
+                <span class="stat-value">${team.points}</span>
               </div>
               <div class="stat">
                 <span class="stat-label">Matches</span>
-                <span class="stat-value">\${team.matches}</span>
+                <span class="stat-value">${team.matches}</span>
+              </div>
+              <div class="stat">
+                <span class="stat-label">Avg/Match</span>
+                <span class="stat-value">${(team.points / team.matches).toFixed(2)}</span>
               </div>
             </div>
           </div>
-        \`;
+        `;
       }).join('');
+    }
+    
+    function updateStatsSummary() {
+      const sorted = getSortedTeams();
+      const filtered = currentFilter === 'all' 
+        ? sorted 
+        : sorted.filter(t => t.country === currentFilter);
+      
+      const searched = filtered.filter(t => t.name.toLowerCase().includes(searchTerm));
+      
+      const totalPoints = searched.reduce((sum, t) => sum + t.points, 0);
+      const avgPoints = searched.length > 0 ? (totalPoints / searched.length).toFixed(1) : 0;
+      
+      document.getElementById('statsSummary').innerHTML = `
+        <div class="summary-card">
+          <h3>Teams</h3>
+          <div class="value">${searched.length}</div>
+        </div>
+        <div class="summary-card">
+          <h3>Total Points</h3>
+          <div class="value">${totalPoints}</div>
+        </div>
+        <div class="summary-card">
+          <h3>Avg Points</h3>
+          <div class="value">${avgPoints}</div>
+        </div>
+      `;
     }
     
     function filterTeams(country) {
       currentFilter = country;
-      document.querySelectorAll('.filter button').forEach(btn => { btn.classList.remove('active'); if (btn.textContent === country) btn.classList.add('active'); });
+      document.querySelectorAll('.filter-btn').forEach(btn => { 
+        btn.classList.remove('active'); 
+        if (btn.textContent.trim() === country) btn.classList.add('active'); 
+      });
+      renderTeams();
+      updateStatsSummary();
+    }
+    
+    function sortTeams(sortBy) {
+      currentSort = sortBy;
+      document.querySelectorAll('.sort-btn').forEach(btn => btn.classList.remove('active'));
+      event.target.classList.add('active');
       renderTeams();
     }
     
     renderTeams();
+    updateStatsSummary();
   </script>
 </body>
 </html>
